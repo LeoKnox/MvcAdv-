@@ -26,6 +26,8 @@ namespace MvcAdv
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<MvcRoomContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("MvcRoomContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +49,17 @@ namespace MvcAdv
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
+    }
+}
+        app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
